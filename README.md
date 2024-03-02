@@ -34,7 +34,9 @@ steps:
 
   - name: Print Tool Versions Output
     id: output
-    run: echo "NodeJS Version ${{ steps.tool-versions-action.outputs.nodejs-version }}"
+    run: |
+      echo "NodeJS Version:" \
+      echo "${{ steps.tool-versions-action.outputs.nodejs-version }}"
 
   - name: Setup Node.js
     id: setup-node
