@@ -32,7 +32,15 @@ steps:
     with:
       file: .tool-versions
 
-  - name: Print Output
+  - name: Print Tool Versions Output
     id: output
-    run: echo "NODEJS VERSION ${{ env.NODEJS_VERSION }}"
+    run: echo "NodeJS Version ${{ steps.tool-versions-action.outputs.nodejs-version }}"
+
+  - name: Setup Node.js
+    id: setup-node
+    uses: actions/setup-node@v4
+    with:
+      node-version: ${{ steps.tool-versions-action.outputs.nodejs-version }}
+      cache: npm
+
 ```
