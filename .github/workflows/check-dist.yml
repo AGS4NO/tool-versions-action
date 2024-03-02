@@ -30,11 +30,17 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
+      - name: Parse Tool Versions
+        id: tool-versions-action
+        uses: ./
+        with:
+          file: .tool-versions
+
       - name: Setup Node.js
         id: setup-node
         uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
+          node-version: ${{ steps.tool-versions-action.outputs.nodejs-version }}
           cache: npm
 
       - name: Install Dependencies

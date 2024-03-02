@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as fs from 'fs'
 
 /**
  * The main function for the action.
@@ -7,20 +7,32 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    // Get the path to the ASDF tool-versions file from input
+    const toolVersionsFilePath = core.getInput('file')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    // Check if the file exists
+    if (!fs.existsSync(toolVersionsFilePath)) {
+      throw new Error(`File not found: ${toolVersionsFilePath}`)
+    }
+    core.debug(`Parsing tool-versions file: ${toolVersionsFilePath}`)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // Read the contents of the tool-versions file
+    const toolVersionsFileContent = fs.readFileSync(
+      toolVersionsFilePath,
+      'utf8'
+    )
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    // Parse the tool-versions file and set outputs
+    const lines = toolVersionsFileContent.split('\n')
+    for (const line of lines) {
+      // Skip comments and empty lines
+      if (!line.trim() || line.trim().startsWith('#')) {
+        return
+      }
+      const [tool, version] = line.split(/\s+/)
+      core.setOutput(`${tool.toLowerCase()}-version`, version)
+    }
   } catch (error) {
-    // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
