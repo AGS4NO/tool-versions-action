@@ -6,7 +6,10 @@
 [![dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
 [![Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 
-This action reads versions from an asdf compatible `.tool-versions` file and sets the versions as environment variables in your workspace as TOOL_VERSION=X.X.X
+This action reads versions from an asdf compatible `.tool-versions` file and 
+sets the versions as environment variables in your workspace. 
+
+Variables are available in the following format: `TOOL_VERSION=X.X.X`.
 
 ## Usage
 
