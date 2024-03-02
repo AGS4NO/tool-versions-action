@@ -1,23 +1,16 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'tool-versions-action'
+description: 'Parse tool versions into environment variables'
+author: 'AGS4NO'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: 'heart'
   color: 'red'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  file:
+    description: 'Path to tool versions file'
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+    default: '.tool-versions'
 
 runs:
   using: node20
