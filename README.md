@@ -12,7 +12,7 @@ sets the versions as outputs in your workflow.
 Variables are available in the following format:
 `${{ steps.tool-versions-action.outputs.nodejs-version }}`
 
-Where `tool-versions-action` is defined as the action's step id.
+Where `tool-versions-action` is defined as the action's step ID.
 
 ## Usage
 
