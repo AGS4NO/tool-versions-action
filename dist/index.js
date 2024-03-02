@@ -2760,8 +2760,6 @@ const fs = __importStar(__nccwpck_require__(147));
  */
 async function run() {
     try {
-        // Get the environment variable option from input
-        const outputEnvironmentVariables = core.getInput('environment');
         // Get the path to the ASDF tool-versions file from input
         const toolVersionsFilePath = core.getInput('file');
         // Check if the file exists
@@ -2771,7 +2769,7 @@ async function run() {
         core.debug(`Parsing tool-versions file: ${toolVersionsFilePath}`);
         // Read the contents of the tool-versions file
         const toolVersionsFileContent = fs.readFileSync(toolVersionsFilePath, 'utf8');
-        // Parse the tool-versions file and set environment variables
+        // Parse the tool-versions file and set outputs
         const lines = toolVersionsFileContent.split('\n');
         for (const line of lines) {
             // Skip comments and empty lines
@@ -2779,10 +2777,6 @@ async function run() {
                 return;
             }
             const [tool, version] = line.split(/\s+/);
-            if (outputEnvironmentVariables === 'true') {
-                core.debug(`Setting environment variable: ${tool.toUpperCase()}_VERSION=${version}`);
-                core.exportVariable(`${tool.toUpperCase()}_VERSION`, version);
-            }
             core.setOutput(`${tool.toLowerCase()}-version`, version);
         }
     }
