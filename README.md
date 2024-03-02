@@ -7,9 +7,12 @@
 [![Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 
 This action reads versions from an asdf compatible `.tool-versions` file and
-sets the versions as environment variables in your workspace.
+sets the versions as outputs in your workflow.
 
-Variables are available in the following format: `TOOL_VERSION=X.X.X`.
+Variables are available in the following format: 
+`${{ steps.tool-versions-action.outputs.nodejs-version }}`
+
+Where `tool-versions-action` is defined as the action's step id.
 
 ## Usage
 
@@ -23,9 +26,9 @@ steps:
     id: checkout
     uses: actions/checkout@v4
 
-  - name: Test Local Action
+  - name: Parse Tool Versions
     id: tool-versions-action
-    uses: AGS4NO/tool-versions-action@v1 # Commit with the `v1` tag
+    uses: AGS4NO/tool-versions-action@v1
     with:
       file: .tool-versions
 

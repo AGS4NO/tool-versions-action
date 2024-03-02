@@ -12,6 +12,14 @@ inputs:
     required: true
     default: '.tool-versions'
 
+outputs:
+  golang-version:
+    description: 'The version of Go (dynamic)'
+  nodejs-version:
+    description: 'The version of Node.js (dynamic)'
+  ruby-version:
+    description: 'The version of Ruby (dynamic)'
+
 runs:
   using: node20
   main: dist/index.js

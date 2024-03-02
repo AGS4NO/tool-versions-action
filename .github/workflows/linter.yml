@@ -35,7 +35,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODEJS_VERSION }}
+          node-version: ${{ steps.tool-versions-action.outputs.nodejs-version }}
           cache: npm
 
       - name: Install Dependencies

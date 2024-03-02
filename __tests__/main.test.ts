@@ -17,6 +17,7 @@ let debugMock: jest.SpiedFunction<typeof core.debug>
 let errorMock: jest.SpiedFunction<typeof core.error>
 let getInputMock: jest.SpiedFunction<typeof core.getInput>
 let setFailedMock: jest.SpiedFunction<typeof core.setFailed>
+let setOutputMock: jest.SpiedFunction<typeof core.setOutput>
 
 describe('action', () => {
   beforeEach(() => {
@@ -26,9 +27,10 @@ describe('action', () => {
     errorMock = jest.spyOn(core, 'error').mockImplementation()
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
+    setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
   })
 
-  it('sets the filepath output', async () => {
+  it('sets the tool versions output', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -43,7 +45,12 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenCalledWith('Setting NODEJS_VERSION to 20.11.0')
+    expect(debugMock).toHaveBeenCalledWith(
+      'Parsing tool-versions file: .tool-versions'
+    )
+    // Verify that the core.setOutput() function was called with the expected values
+    expect(setOutputMock).toHaveBeenCalledWith('nodejs-version', '20.11.0')
+    // Verify that the core.setFailed() and core.error() functions were not called
     expect(errorMock).not.toHaveBeenCalled()
   })
 

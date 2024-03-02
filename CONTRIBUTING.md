@@ -89,7 +89,7 @@ need to perform some initial setup steps before you can develop this action.
 1. Create a pull request and get feedback on your action
 1. Merge the pull request into the `main` branch
 
-The action updates are now published! :rocket:
+The action updates are now published and ready for use in other repositories! :rocket:
 
 For information about versioning, see
 [Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
@@ -107,15 +107,15 @@ steps:
     id: checkout
     uses: actions/checkout@v4
 
-  - name: Test Local Action
-    id: test-action
+  - name: Parse Tool Versions
+    id: tool-versions-action
     uses: ./
     with:
       file: .tool-versions
 
   - name: Print Output
     id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+    run: echo "${{ steps.tool-versions-action.outputs.nodejs-version }}"
 ```
 
 ## Publishing a New Release
