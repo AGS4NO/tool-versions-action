@@ -31,5 +31,5 @@ steps:
 
   - name: Print Output
     id: output
-    run: echo "${{ env.NODEJS_VERSION }}"
+    run: echo "NODEJS VERSION ${{ env.NODEJS_VERSION }}"
 ```
